@@ -1,0 +1,251 @@
+.ajd-route {
+  display: flex;
+  flex-direction: column;
+  gap: var(--ajd-space-6);
+  inline-size: 100%;
+  max-inline-size: 366px;
+  padding: var(--ajd-space-7);
+  border-radius: var(--ajd-radius-3xl);
+  background: var(--ajd-color-surface-raised);
+  box-shadow: var(--ajd-shadow-3);
+  font-family: var(--ajd-font-family);
+}
+
+.ajd-route__header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: var(--ajd-space-4);
+}
+
+.ajd-route__heading {
+  display: flex;
+  flex-direction: column;
+  gap: var(--ajd-space-2);
+  min-inline-size: 0;
+}
+
+.ajd-route__title {
+  margin: 0;
+  font-size: var(--ajd-font-size-title);
+  font-weight: var(--ajd-font-weight-bold);
+  line-height: var(--ajd-line-height-normal);
+  color: var(--ajd-color-on-surface);
+}
+
+.ajd-route__description {
+  margin: 0;
+  font-size: var(--ajd-font-size-label);
+  font-weight: var(--ajd-font-weight-regular);
+  line-height: var(--ajd-line-height-normal);
+  color: var(--ajd-color-on-surface-variant);
+}
+
+.ajd-route__close {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex: none;
+  inline-size: 32px;
+  block-size: 32px;
+  border: 0;
+  border-radius: var(--ajd-radius-lg);
+  background: var(--ajd-color-surface);
+  color: var(--ajd-color-on-surface-variant);
+  cursor: pointer;
+  transition: background-color var(--ajd-duration-fast) var(--ajd-easing-standard);
+}
+
+.ajd-route__close:hover {
+  background: var(--ajd-color-primary-soft);
+  color: var(--ajd-color-primary);
+}
+
+.ajd-route__close:focus-visible {
+  outline: var(--ajd-focus-width) solid var(--ajd-color-focus);
+  outline-offset: 2px;
+}
+
+.ajd-route__options {
+  display: flex;
+  flex-direction: column;
+  gap: var(--ajd-space-6);
+}
+
+.ajd-route__option {
+  display: flex;
+  flex-direction: column;
+  gap: var(--ajd-space-3);
+  inline-size: 100%;
+  padding: var(--ajd-space-5) var(--ajd-space-6);
+  border: 1px solid var(--ajd-color-outline);
+  border-radius: var(--ajd-radius-2xl);
+  background: var(--ajd-color-surface-sunken);
+  font-family: inherit;
+  text-align: start;
+  cursor: pointer;
+  transition: background-color var(--ajd-duration-fast) var(--ajd-easing-standard),
+    border-color var(--ajd-duration-fast) var(--ajd-easing-standard);
+}
+
+.ajd-route__option:hover {
+  border-color: var(--ajd-color-outline-strong);
+}
+
+.ajd-route__option:focus-visible {
+  outline: var(--ajd-focus-width) solid var(--ajd-color-focus);
+  outline-offset: 2px;
+}
+
+.ajd-route__option[data-selected][data-kind='segura'] {
+  background: var(--ajd-color-surface);
+  border-color: var(--ajd-color-outline-strong);
+}
+
+.ajd-route__option[data-selected][data-kind='insegura'] {
+  background: var(--ajd-color-warning-surface);
+  border-color: var(--ajd-color-warning-outline);
+}
+
+.ajd-route__option-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--ajd-space-4);
+}
+
+.ajd-route__option-summary {
+  display: flex;
+  align-items: center;
+  gap: var(--ajd-space-5);
+  min-inline-size: 0;
+}
+
+.ajd-route__option-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex: none;
+  inline-size: 36px;
+  block-size: 36px;
+  border-radius: var(--ajd-radius-xl);
+  color: #ffffff;
+}
+
+.ajd-route__option[data-kind='segura'] .ajd-route__option-icon {
+  background: var(--ajd-color-primary);
+}
+
+.ajd-route__option[data-kind='insegura'] .ajd-route__option-icon {
+  background: var(--ajd-color-danger);
+}
+
+.ajd-route__option-text {
+  display: flex;
+  flex-direction: column;
+  gap: var(--ajd-space-1);
+  min-inline-size: 0;
+}
+
+.ajd-route__option-title {
+  font-size: var(--ajd-font-size-body);
+  font-weight: var(--ajd-font-weight-bold);
+  line-height: var(--ajd-line-height-normal);
+  color: var(--ajd-color-on-surface);
+}
+
+.ajd-route__option-description {
+  font-size: var(--ajd-font-size-label-sm);
+  font-weight: var(--ajd-font-weight-regular);
+  line-height: var(--ajd-line-height-normal);
+  color: var(--ajd-color-on-surface-variant);
+}
+
+.ajd-route__option[data-kind='insegura'] .ajd-route__option-description {
+  color: var(--ajd-color-on-danger-container);
+}
+
+.ajd-route__badge {
+  flex: none;
+  padding: var(--ajd-space-2) var(--ajd-space-4);
+  border-radius: var(--ajd-radius-md);
+  font-size: var(--ajd-font-size-caption);
+  font-weight: var(--ajd-font-weight-bold);
+  line-height: var(--ajd-line-height-normal);
+  white-space: nowrap;
+}
+
+.ajd-route__option[data-kind='segura'] .ajd-route__badge {
+  background: var(--ajd-color-primary-container);
+  color: var(--ajd-color-on-primary-container);
+}
+
+.ajd-route__option[data-kind='insegura'] .ajd-route__badge {
+  background: var(--ajd-color-danger-container);
+  color: var(--ajd-color-on-danger-container);
+}
+
+.ajd-route__metrics {
+  display: flex;
+  gap: var(--ajd-space-4);
+  inline-size: 100%;
+}
+
+.ajd-route__metric {
+  display: flex;
+  flex: 1 1 0;
+  align-items: center;
+  justify-content: center;
+  gap: var(--ajd-space-3);
+  min-inline-size: 0;
+  block-size: 32px;
+  padding: var(--ajd-space-3);
+  border-radius: var(--ajd-radius-lg);
+  background: var(--ajd-color-surface-raised);
+  white-space: nowrap;
+}
+
+.ajd-route__metric-label {
+  font-size: var(--ajd-font-size-caption);
+  font-weight: var(--ajd-font-weight-regular);
+  color: var(--ajd-color-on-surface-variant);
+}
+
+.ajd-route__metric-value {
+  font-size: var(--ajd-font-size-label);
+  font-weight: var(--ajd-font-weight-bold);
+  color: var(--ajd-color-on-surface);
+}
+
+.ajd-route__start {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--ajd-space-4);
+  inline-size: 100%;
+  block-size: 40px;
+  border: 0;
+  border-radius: var(--ajd-radius-3xl);
+  background: var(--ajd-color-primary);
+  box-shadow: 0 3px 6px rgba(33, 29, 41, 0.12);
+  color: var(--ajd-color-on-primary);
+  font-family: inherit;
+  font-size: var(--ajd-font-size-body);
+  font-weight: var(--ajd-font-weight-bold);
+  cursor: pointer;
+  transition: background-color var(--ajd-duration-fast) var(--ajd-easing-standard);
+}
+
+.ajd-route__start:hover {
+  background: var(--ajd-color-primary-hover);
+}
+
+.ajd-route__start:active {
+  background: var(--ajd-color-primary-active);
+}
+
+.ajd-route__start:focus-visible {
+  outline: var(--ajd-focus-width) solid var(--ajd-color-focus);
+  outline-offset: 2px;
+  box-shadow: 0 0 0 1px var(--ajd-color-focus-inner);
+}

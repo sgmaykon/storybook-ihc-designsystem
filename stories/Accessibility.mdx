@@ -1,0 +1,193 @@
+import { Meta } from '@storybook/addon-docs/blocks';
+import { contrastPairs, forbiddenContrastPairs } from './tokens';
+import { DocTable } from './DocTable';
+
+export const Level = ({ level }) => {
+  const map = {
+    AA: { label: 'Passa AA', color: '#14532D', background: '#DCFCE7' },
+    'AA-large': { label: 'AA (Ícones / Gráfico ≥ 3:1)', color: '#713F12', background: '#FEF9C3' },
+    Decorativo: { label: 'Decorativo (Isento)', color: '#4F378B', background: '#EADDFF' },
+    Falha: { label: 'Proibido p/ texto', color: '#991B1B', background: '#FEE2E2' },
+  };
+  const style = map[level] ?? map.Falha;
+  return (
+    <span
+      style={{
+        display: 'inline-block',
+        padding: '2px 8px',
+        borderRadius: 999,
+        fontSize: 12,
+        fontWeight: 700,
+        color: style.color,
+        background: style.background,
+        whiteSpace: 'nowrap',
+      }}
+    >
+      {style.label}
+    </span>
+  );
+};
+
+export const Ratio = ({ ratio, level }) => (
+  <strong
+    style={{
+      color:
+        level === 'Decorativo'
+          ? '#625B71'
+          : ratio >= 4.5
+            ? '#14532D'
+            : ratio >= 3
+              ? '#713F12'
+              : '#991B1B',
+    }}
+  >
+    {ratio}:1
+  </strong>
+);
+
+export const ContrastTable = ({ pairs = contrastPairs }) => (
+  <table>
+    <thead>
+      <tr>
+        <th>Primeiro plano</th>
+        <th>Fundo</th>
+        <th>Razão</th>
+        <th>Requisito</th>
+        <th>Resultado</th>
+        <th>Observação</th>
+      </tr>
+    </thead>
+    <tbody>
+      {pairs.map((pair) => (
+        <tr key={`${pair.foreground}-${pair.background}-${pair.requirement}`}>
+          <td><code>{pair.foreground}</code></td>
+          <td><code>{pair.background}</code></td>
+          <td><Ratio ratio={pair.ratio} level={pair.level} /></td>
+          <td>{pair.requirement}</td>
+          <td><Level level={pair.level} /></td>
+          <td>{pair.note}</td>
+        </tr>
+      ))}
+    </tbody>
+  </table>
+);
+
+<Meta title="Ajudivas/Acessibilidade" />
+
+# Acessibilidade
+
+O app segue a **WCAG 2.1 nível AA** e as diretrizes do **Material Design 3**
+(RNF02). Este documento mapeia cada critério aplicável, mostra o contraste
+medido de cada par de cores e explica a barra de ferramentas de acessibilidade.
+
+## Mapa WCAG 2.1 AA
+
+<DocTable
+  head={['Critério', 'Nível', 'Como o design atende']}
+  rows={[
+    ['**1.1.1** Conteúdo não textual', 'A', 'Todo ícone tem rótulo visível ou `aria-label`; fotos têm `alt` descritivo'],
+    ['**1.3.1** Informação e relações', 'A', 'HTML semântico (`nav`, `ul`, `button`, `role="toolbar"`), títulos hierárquicos'],
+    ['**1.4.1** Uso de cor', 'A', 'Gravidade usa cor **+** texto **+** ícone/forma; seleção usa fundo **+** selo **+** `aria-checked`'],
+    ['**1.4.3** Contraste (texto)', 'AA', 'Texto normal ≥ **4.5:1**; texto grande ≥ 3:1 (tabela abaixo)'],
+    ['**1.4.4** Redimensionar texto', 'AA', 'Tamanhos em `rem` + escala de 85 % / 100 % / 125 %'],
+    ['**1.4.11** Contraste não textual', 'AA', 'Ícones e bordas de controle ≥ 3:1; foco com halo duplo'],
+    ['**1.4.12** Espaçamento de texto', 'AA', 'Layouts sem altura fixa; texto pode crescer 200 % sem corte'],
+    ['**2.1.1** Teclado', 'A', 'Tudo operável por Tab/Enter/Espaço; toolbar com setas/Home/End'],
+    ['**2.3.3** Animações', 'AAA', '`prefers-reduced-motion` desliga transições'],
+    ['**2.4.3** Ordem de foco', 'A', 'Ordem do DOM = ordem visual (header → conteúdo → nav)'],
+    ['**2.4.7** Foco visível', 'AA', 'Anel de 3 px `#4F378B` + halo branco de 1 px'],
+    ['**2.5.5** Tamanho do alvo', 'AAA', 'Alvos principais ≥ 48 × 48 px; NavBar 70 × 76 px'],
+    ['**2.5.8** Tamanho mínimo do alvo', 'AA', 'Mínimo absoluto de 24 × 24 px, com espaçamento de 8 px'],
+    ['**3.2.3** Navegação consistente', 'AA', 'NavBar fixa na metade inferior em todas as telas'],
+    ['**3.3.1** Identificação de erro', 'A', 'Campos com `aria-invalid`, mensagem em texto e `aria-describedby`'],
+    ['**4.1.2** Nome, função, valor', 'A', '`aria-pressed`, `aria-current`, `aria-expanded`, `aria-selected`'],
+    ['**4.1.3** Mensagens de status', 'AA', 'Região `aria-live="polite"` anuncia mudanças da toolbar'],
+  ]}
+/>
+
+## Contraste medido
+
+Razões calculadas com a fórmula WCAG 2.1 (luminância relativa) em
+`contrastRatio()` de `stories/tokens.ts`. O requisito para texto normal é
+**4.5:1**; para texto grande (≥ 18.66 px bold / 24 px) é **3:1**; para
+componentes não textuais é **3:1**.
+
+<ContrastTable />
+
+### Resumo
+
+- **100% dos pares em uso no Design System são aprovados:**
+  - **16 pares aprovados em AA (≥ 4.5:1)** — todo texto da interface passa com folga (incluindo `--ajd-color-warning-strong` `#9A3412` com **7.31:1** e `--ajd-color-danger-strong` `#B91C1C` com **6.47:1**).
+  - **2 pares aprovados para Ícones / Elementos Gráficos (≥ 3:1 — WCAG 1.4.11)** — `--ajd-color-warning` (`#E46962`) e `--ajd-color-danger` (`#DC2626`) restritos exclusivamente a marcadores e ícones.
+  - **2 pares Decorativos / Isentos (WCAG 1.4.11)** — divisórias `#E7E1F0` e borda redundante `#D0BCFF` (a seleção também é comunicada por fundo `#FFFFFF`, selo e `aria-checked`).
+
+### Combinações proibidas para texto pequeno (substituídas no Design System)
+
+A tabela abaixo registra por que os tons de preenchimento não devem ser aplicados diretamente em textos pequenos e qual token semântico deve ser usado no lugar:
+
+<ContrastTable pairs={forbiddenContrastPairs} />
+
+## Barra de ferramentas de acessibilidade
+
+Componente `AccessibilityToolbar` (RNF02/RNF03). Segue o padrão
+`role="toolbar"` do WAI-ARIA Authoring Practices.
+
+<DocTable
+  head={['Ação', 'Efeito', 'Estado exposto']}
+  rows={[
+    ['**Texto −**', '`--ajd-text-scale: 0.85`', 'anúncio “Texto reduzido”'],
+    ['**Texto +**', '`--ajd-text-scale: 1.25`', 'anúncio “Texto ampliado”'],
+    ['**Contraste**', '`data-ajd-contrast="high"` no `<html>`', '`aria-pressed`'],
+    ['**Voz**', 'leitura em voz alta (callback)', '`aria-pressed`'],
+    ['**Mapa**', 'mapa simplificado (callback)', '`aria-pressed`'],
+    ['**Ajuda**', 'abre ajuda contextual (callback)', '—'],
+  ]}
+/>
+
+### Teclado
+
+<DocTable
+  head={['Tecla', 'Comportamento']}
+  rows={[
+    ['`Tab`', 'entra na toolbar (um único tab stop)'],
+    ['`←` / `→`', 'move o foco entre os seis botões'],
+    ['`Home` / `End`', 'primeiro / último botão'],
+    ['`Enter` / `Espaço`', 'aciona o botão focado'],
+  ]}
+/>
+
+### Diretrizes Material aplicadas
+
+- **Alvos de toque:** 48 × 56 px (Material recomenda 48 dp).
+- **Rótulo sempre visível:** ícone + texto; nunca só o ícone.
+- **Estados:** `hover` (elevação), `pressed` (`aria-pressed`), `focus`
+  (anel duplo), `disabled` (opacidade + `aria-disabled`).
+- **Tipografia:** Roboto, no máximo 3 pesos por tela.
+- **Movimento:** durações de 120–320 ms com easing padrão; respeita
+  `prefers-reduced-motion`.
+
+### Alto contraste
+
+O modo de alto contraste troca a paleta por preto/branco e cores escuras
+saturadas, mantendo a hierarquia:
+
+<DocTable
+  head={['Token', 'Padrão', 'Alto contraste']}
+  rows={[
+    ['`--ajd-color-primary`', '`#6750A4`', '`#4A2F86`'],
+    ['`--ajd-color-surface`', '`#F3EDF7`', '`#FFFFFF`'],
+    ['`--ajd-color-on-surface`', '`#211D29`', '`#000000`'],
+    ['`--ajd-color-danger`', '`#DC2626`', '`#A80000`'],
+    ['`--ajd-color-warning`', '`#E46962`', '`#7A2B1E`'],
+    ['sombras', 'difusas', 'contorno de 2 px `#000000`'],
+  ]}
+/>
+
+## Como testar
+
+```sh
+npm run storybook
+# Addon A11y: aba "Accessibility" em cada story
+# Navegação: apenas teclado (Tab / setas / Enter)
+# Zoom: 200 % no navegador + botão "Texto +"
+```

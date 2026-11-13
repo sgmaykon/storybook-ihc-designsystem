@@ -1,0 +1,107 @@
+.ajd-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--ajd-space-4);
+  border: 0;
+  border-radius: var(--ajd-radius-pill);
+  font-family: var(--ajd-font-family);
+  font-size: var(--ajd-font-size-body);
+  font-weight: var(--ajd-font-weight-bold);
+  line-height: 1;
+  white-space: nowrap;
+  cursor: pointer;
+  transition: background-color var(--ajd-duration-fast) var(--ajd-easing-standard),
+    color var(--ajd-duration-fast) var(--ajd-easing-standard),
+    box-shadow var(--ajd-duration-fast) var(--ajd-easing-standard);
+}
+
+.ajd-button:focus-visible {
+  outline: var(--ajd-focus-width) solid var(--ajd-color-focus);
+  outline-offset: 2px;
+  box-shadow: 0 0 0 1px var(--ajd-color-focus-inner);
+}
+
+.ajd-button:disabled {
+  cursor: not-allowed;
+  opacity: 0.45;
+}
+
+.ajd-button--sm {
+  block-size: 32px;
+  padding-inline: var(--ajd-space-6);
+  font-size: var(--ajd-font-size-label);
+}
+
+.ajd-button--md {
+  block-size: 40px;
+  padding-inline: var(--ajd-space-7);
+}
+
+.ajd-button--lg {
+  block-size: 48px;
+  padding-inline: var(--ajd-space-9);
+}
+
+.ajd-button--full {
+  inline-size: 100%;
+}
+
+/* CTA e primária: roxo preenchido (6.44:1 com o texto branco) */
+.ajd-button--cta,
+.ajd-button--primary {
+  background: var(--ajd-color-primary);
+  color: var(--ajd-color-on-primary);
+}
+
+.ajd-button--cta {
+  box-shadow: var(--ajd-shadow-1);
+}
+
+.ajd-button--cta:hover,
+.ajd-button--primary:hover {
+  background: var(--ajd-color-primary-hover);
+}
+
+.ajd-button--cta:active,
+.ajd-button--primary:active {
+  background: var(--ajd-color-primary-active);
+}
+
+/* Secundária: roxo tonal (7.23:1) */
+.ajd-button--secondary {
+  background: var(--ajd-color-primary-container);
+  color: var(--ajd-color-on-primary-container);
+}
+
+.ajd-button--secondary:hover {
+  background: #e0cffd;
+}
+
+.ajd-button--secondary:active {
+  background: #d6c1fb;
+}
+
+/* Terciária: texto roxo sobre superfície (6.44:1) */
+.ajd-button--ghost {
+  background: transparent;
+  color: var(--ajd-color-primary);
+}
+
+.ajd-button--ghost:hover {
+  background: var(--ajd-color-primary-soft);
+}
+
+/* Destrutiva / emergência (4.83:1 com o texto branco; hover 6.47:1) */
+.ajd-button--danger {
+  background: var(--ajd-color-danger);
+  color: #ffffff;
+}
+
+.ajd-button--danger:hover {
+  background: var(--ajd-color-danger-strong);
+}
+
+.ajd-button--danger:active {
+  background: #991b1b;
+}

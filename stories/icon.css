@@ -1,0 +1,17 @@
+.ajd-icon {
+  display: inline-block;
+  flex: none;
+  inline-size: var(--ajd-icon-size, 24px);
+  block-size: var(--ajd-icon-size, 24px);
+  background-color: currentColor;
+  -webkit-mask-image: var(--ajd-icon-url);
+  mask-image: var(--ajd-icon-url);
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+  -webkit-mask-position: center;
+  mask-position: center;
+  -webkit-mask-size: contain;
+  mask-size: contain;
+  vertical-align: middle;
+  pointer-events: none;
+}

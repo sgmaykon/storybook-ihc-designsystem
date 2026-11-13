@@ -1,0 +1,94 @@
+.ajd-marker {
+  position: relative;
+  display: inline-block;
+  inline-size: 116px;
+  block-size: 116px;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  font-family: var(--ajd-font-family);
+  color: inherit;
+  text-align: center;
+}
+
+button.ajd-marker {
+  cursor: pointer;
+}
+
+.ajd-marker__halo {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  padding-block-start: 36px;
+  border-radius: var(--ajd-radius-pill);
+  transition: transform var(--ajd-duration-fast) var(--ajd-easing-standard),
+    box-shadow var(--ajd-duration-fast) var(--ajd-easing-standard);
+}
+
+.ajd-marker--grave .ajd-marker__halo {
+  background: rgba(220, 38, 38, 0.1);
+  border: 1px solid rgba(220, 38, 38, 0.25);
+}
+
+.ajd-marker--media .ajd-marker__halo {
+  background: rgba(228, 105, 98, 0.12);
+  border: 1px solid var(--ajd-color-warning);
+}
+
+.ajd-marker__badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  inline-size: 36px;
+  block-size: 36px;
+  border: 3px solid #ffffff;
+  border-radius: var(--ajd-radius-xl);
+  color: #ffffff;
+}
+
+.ajd-marker--grave .ajd-marker__badge {
+  background: var(--ajd-color-danger);
+}
+
+.ajd-marker--media .ajd-marker__badge {
+  background: var(--ajd-color-warning);
+}
+
+.ajd-marker__label {
+  position: absolute;
+  inset-inline: 0;
+  inset-block-start: 81px;
+  font-size: var(--ajd-font-size-label);
+  font-weight: var(--ajd-font-weight-bold);
+  line-height: var(--ajd-line-height-tight);
+}
+
+.ajd-marker--grave .ajd-marker__label {
+  color: var(--ajd-color-on-danger-container);
+}
+
+.ajd-marker--media .ajd-marker__label {
+  color: var(--ajd-color-on-warning-container);
+}
+
+.ajd-marker--selected .ajd-marker__halo {
+  box-shadow: 0 0 0 3px var(--ajd-color-surface-raised), 0 0 0 6px var(--ajd-color-focus);
+}
+
+button.ajd-marker:hover .ajd-marker__halo {
+  transform: scale(1.04);
+}
+
+button.ajd-marker:active .ajd-marker__halo {
+  transform: scale(0.97);
+}
+
+button.ajd-marker:focus-visible {
+  outline: none;
+}
+
+button.ajd-marker:focus-visible .ajd-marker__halo {
+  box-shadow: 0 0 0 3px var(--ajd-color-surface-raised), 0 0 0 6px var(--ajd-color-focus);
+}

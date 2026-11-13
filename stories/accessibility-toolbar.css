@@ -1,0 +1,52 @@
+.ajd-a11y {
+  display: inline-flex;
+  align-items: stretch;
+  justify-content: space-between;
+  gap: var(--ajd-space-1);
+  padding: var(--ajd-space-3);
+  border-radius: var(--ajd-radius-3xl);
+  background: var(--ajd-color-surface);
+  box-shadow: 0 4px 8px rgba(33, 29, 41, 0.15);
+  font-family: var(--ajd-font-family);
+}
+
+.ajd-a11y__button {
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: var(--ajd-space-1);
+  min-inline-size: var(--ajd-touch-target);
+  block-size: 56px;
+  padding: var(--ajd-space-2) var(--ajd-space-3);
+  border: 0;
+  border-radius: var(--ajd-radius-lg);
+  background: transparent;
+  color: var(--ajd-color-primary);
+  font-family: inherit;
+  cursor: pointer;
+  transition: background-color var(--ajd-duration-fast) var(--ajd-easing-standard),
+    color var(--ajd-duration-fast) var(--ajd-easing-standard);
+}
+
+.ajd-a11y__button:hover {
+  background: var(--ajd-color-primary-soft);
+}
+
+.ajd-a11y__button[aria-pressed='true'] {
+  background: var(--ajd-color-primary-container);
+  color: var(--ajd-color-on-primary-container);
+}
+
+.ajd-a11y__button:focus-visible {
+  outline: var(--ajd-focus-width) solid var(--ajd-color-focus);
+  outline-offset: 2px;
+  box-shadow: 0 0 0 1px var(--ajd-color-focus-inner);
+}
+
+.ajd-a11y__label {
+  font-size: var(--ajd-font-size-caption);
+  font-weight: var(--ajd-font-weight-medium);
+  line-height: 1.1;
+  white-space: nowrap;
+}

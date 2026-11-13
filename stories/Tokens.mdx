@@ -1,0 +1,302 @@
+import { Meta } from '@storybook/addon-docs/blocks';
+import {
+  colorTokens,
+  typeTokens,
+  spacingTokens,
+  radiusTokens,
+  elevationTokens,
+} from './tokens';
+
+export const Swatch = ({ hex }) => (
+  <span
+    style={{
+      display: 'inline-block',
+      inlineSize: 24,
+      blockSize: 24,
+      borderRadius: 6,
+      border: '1px solid rgba(33,29,41,.18)',
+      background: hex,
+      verticalAlign: 'middle',
+    }}
+  />
+);
+
+export const ColorTable = ({ tokens }) => (
+  <table>
+    <thead>
+      <tr>
+        <th>Token</th>
+        <th>Papel</th>
+        <th>Cor</th>
+        <th>Hex</th>
+        <th>Contraste s/ branco</th>
+        <th>Uso</th>
+      </tr>
+    </thead>
+    <tbody>
+      {tokens.map((color) => (
+        <tr key={color.token}>
+          <td><code>--ajd-{color.token}</code></td>
+          <td>{color.role}</td>
+          <td><Swatch hex={color.hex} /></td>
+          <td><code>{color.hex}</code></td>
+          <td>{color.onWhite}:1</td>
+          <td>{color.usage}</td>
+        </tr>
+      ))}
+    </tbody>
+  </table>
+);
+
+export const SimpleTable = ({ head, rows }) => (
+  <table>
+    <thead>
+      <tr>{head.map((cell) => <th key={cell}>{cell}</th>)}</tr>
+    </thead>
+    <tbody>
+      {rows.map((row, index) => (
+        <tr key={index}>
+          {row.map((cell, cellIndex) => (
+            <td key={cellIndex}>{cell}</td>
+          ))}
+        </tr>
+      ))}
+    </tbody>
+  </table>
+);
+
+export const TextStyleTable = () => (
+  <table>
+    <thead>
+      <tr>
+        <th>Nível / Elemento</th>
+        <th>Token de cor</th>
+        <th>Peso (Bold / Weight)</th>
+        <th>Hex</th>
+        <th>Amostra visual</th>
+        <th>Uso no app</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><strong>Display</strong></td>
+        <td><code>--ajd-color-text-primary</code></td>
+        <td><strong>Bold 700</strong></td>
+        <td><code>#211D29</code></td>
+        <td><span style={{ color: '#211D29', fontWeight: 700, fontSize: 18 }}>Ajudivas</span></td>
+        <td>Wordmark no header</td>
+      </tr>
+      <tr>
+        <td><strong>Título principal</strong></td>
+        <td><code>--ajd-color-text-primary</code></td>
+        <td><strong>Bold 700</strong></td>
+        <td><code>#211D29</code></td>
+        <td><span style={{ color: '#211D29', fontWeight: 700, fontSize: 16 }}>Rota sugerida</span></td>
+        <td>Títulos de painéis e avisos</td>
+      </tr>
+      <tr>
+        <td><strong>Título de card / Alerta</strong></td>
+        <td><code>--ajd-color-text-primary</code></td>
+        <td><strong>SemiBold 600</strong></td>
+        <td><code>#211D29</code></td>
+        <td><span style={{ color: '#211D29', fontWeight: 600, fontSize: 15 }}>Assédio verbal</span></td>
+        <td>Card de detalhes da ocorrência</td>
+      </tr>
+      <tr>
+        <td><strong>Métricas e badges</strong></td>
+        <td><code>--ajd-color-text-primary</code></td>
+        <td><strong>SemiBold 600 / Bold 700</strong></td>
+        <td><code>#211D29</code></td>
+        <td><span style={{ color: '#211D29', fontWeight: 600, fontSize: 14 }}>12 min · 850 m</span></td>
+        <td>Duração, distância, valores de métricas</td>
+      </tr>
+      <tr>
+        <td><strong>Corpo de texto</strong></td>
+        <td><code>--ajd-color-text-primary</code></td>
+        <td><strong>Regular 400</strong></td>
+        <td><code>#211D29</code></td>
+        <td><span style={{ color: '#211D29', fontWeight: 400, fontSize: 14 }}>Iluminação pública constante</span></td>
+        <td>Descrições principais, itens de sugestão</td>
+      </tr>
+      <tr>
+        <td><strong>Rótulos de navegação</strong></td>
+        <td><code>--ajd-color-text-secondary</code></td>
+        <td><strong>Medium 500</strong></td>
+        <td><code>#625B71</code></td>
+        <td><span style={{ color: '#625B71', fontWeight: 500, fontSize: 12 }}>Início · Feed</span></td>
+        <td>Itens da NavBar, metadados secundários</td>
+      </tr>
+      <tr>
+        <td><strong>Texto secundário / Legendas</strong></td>
+        <td><code>--ajd-color-text-secondary</code></td>
+        <td><strong>Regular 400</strong></td>
+        <td><code>#625B71</code></td>
+        <td><span style={{ color: '#625B71', fontWeight: 400, fontSize: 13 }}>Buscar ruas, locais seguros...</span></td>
+        <td>Placeholder de busca, micro-legendas</td>
+      </tr>
+    </tbody>
+  </table>
+);
+
+<Meta title="Ajudivas/Design tokens" />
+
+# Design tokens
+
+Todos os valores vêm do arquivo **Projeto IHC** e são expostos como custom
+properties CSS com prefixo `--ajd-`. O arquivo `stories/tokens.css` é a única
+fonte de estilos globais; `stories/tokens.ts` traz as mesmas tabelas tipadas.
+
+```css
+/* exemplo */
+.qualquer-elemento {
+  color: var(--ajd-color-primary);
+  background: var(--ajd-color-surface);
+  font: var(--ajd-font-weight-medium) var(--ajd-font-size-body) var(--ajd-font-family);
+}
+```
+
+## Cores
+
+### Marca e ações
+
+Cores institucionais e de ação do aplicativo. Destaques (selos, badges e pílulas ativas) usam `--ajd-color-highlight-bg` e seu texto contrastante `--ajd-color-highlight-text`.
+
+<ColorTable
+  tokens={colorTokens.filter((color) =>
+    ['color-primary', 'color-on-primary', 'color-highlight-bg', 'color-highlight-text'].includes(
+      color.token,
+    ),
+  )}
+/>
+
+### Superfícies e bordas
+
+Planos de fundo estruturais, cartões elevados e divisórias do layout.
+
+<ColorTable
+  tokens={colorTokens.filter((color) =>
+    [
+      'color-surface',
+      'color-surface-raised',
+      'color-outline',
+      'color-outline-strong',
+    ].includes(color.token),
+  )}
+/>
+
+### Cores de texto
+
+Tokens semânticos de cor para tipografia: `--ajd-color-text-primary` (`#211D29`) e `--ajd-color-text-secondary` (`#625B71`).
+
+<ColorTable
+  tokens={colorTokens.filter((color) =>
+    ['color-text-primary', 'color-text-secondary'].includes(color.token),
+  )}
+/>
+
+#### Aplicação das cores de texto por peso (Bolds e Regular)
+
+Demonstração de como cada cor de texto é combinada com seus respectivos pesos tipográficos na interface:
+
+<TextStyleTable />
+
+### Estados e gravidade
+
+Convenção do RNF09: **seguro = roxo**, **atenção = laranja**,
+**perigo = vermelho**. Cada estado tem um token de *preenchimento* (ícones,
+barras) e um token *forte* para texto pequeno.
+
+<ColorTable
+  tokens={colorTokens.filter(
+    (color) => color.token.includes('danger') || color.token.includes('warning'),
+  )}
+/>
+
+> **Ajuste de acessibilidade:** o laranja original do Figma (`#E46962`) tem
+> **3.23:1** sobre branco — reprovado para texto pequeno. Por isso o token
+> `--ajd-color-warning-strong` (`#9A3412`, **7.31:1**) é usado em textos, e o
+> laranja fica restrito a preenchimentos/ícones grandes. O selo usa
+> `#4F378B` sobre `#EADDFF` (**7.23:1**).
+
+## Tipografia
+
+Fonte única: **Roboto** (Google Fonts, Apache 2.0), pesos 300–700.
+Todos os tamanhos são `rem` multiplicados por `--ajd-text-scale`, então os
+botões *Texto + / Texto −* da barra de acessibilidade ampliam o layout inteiro
+(WCAG 1.4.4).
+
+<SimpleTable
+  head={['Token', 'Tamanho', 'Peso', 'Entrelinha', 'Uso']}
+  rows={typeTokens.map((type) => [
+    <code>--ajd-font-size-{type.token}</code>,
+    type.size,
+    type.weight,
+    type.lineHeight,
+    type.usage,
+  ])}
+/>
+
+### Amostra
+
+<div style={{ display: 'grid', gap: 12, padding: 24, background: '#FFFFFF', borderRadius: 24 }}>
+  <span style={{ font: '700 28px Roboto, sans-serif', letterSpacing: '-0.5px' }}>Ajudivas</span>
+  <span style={{ font: '600 22px Roboto, sans-serif' }}>Ocorrência grave perto de você</span>
+  <span style={{ font: '700 18px Roboto, sans-serif' }}>Rotas disponíveis</span>
+  <span style={{ font: '400 14px Roboto, sans-serif' }}>
+    Rota com iluminação pública e movimento de pessoas.
+  </span>
+  <span style={{ font: '600 12px Roboto, sans-serif' }}>Sugestões recentes</span>
+  <span style={{ font: '500 11px Roboto, sans-serif' }}>Contatos úteis</span>
+  <span style={{ font: '400 10px Roboto, sans-serif' }}>Relatado há 2 horas</span>
+</div>
+
+## Espaçamento
+
+Base de 4 px. Os tokens `--ajd-space-*` são usados para padding, gap e margens.
+
+<SimpleTable
+  head={['Token', 'Valor', 'Uso']}
+  rows={spacingTokens.map((space) => [
+    <code>--ajd-{space.token}</code>,
+    space.value,
+    space.usage,
+  ])}
+/>
+
+## Raios
+
+<SimpleTable
+  head={['Token', 'Valor', 'Uso']}
+  rows={radiusTokens.map((radius) => [
+    <code>--ajd-{radius.token}</code>,
+    radius.value,
+    radius.usage,
+  ])}
+/>
+
+## Elevação
+
+<SimpleTable
+  head={['Token', 'Valor', 'Uso']}
+  rows={elevationTokens.map((elevation) => [
+    <code>--ajd-{elevation.token}</code>,
+    <code>{elevation.value}</code>,
+    elevation.usage,
+  ])}
+/>
+
+## Movimento
+
+<SimpleTable
+  head={['Token', 'Valor']}
+  rows={[
+    [<code>--ajd-duration-fast</code>, <code>120ms</code>],
+    [<code>--ajd-duration-base</code>, <code>200ms</code>],
+    [<code>--ajd-duration-slow</code>, <code>320ms</code>],
+    [<code>--ajd-easing-standard</code>, <code>cubic-bezier(0.2, 0, 0, 1)</code>],
+    [<code>--ajd-easing-emphasized</code>, <code>cubic-bezier(0.05, 0.7, 0.1, 1)</code>],
+  ]}
+/>
+
+Com `prefers-reduced-motion: reduce` todas as transições caem para `0.01ms`
+(WCAG 2.3.3).

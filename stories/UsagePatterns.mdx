@@ -1,0 +1,450 @@
+import { Meta } from '@storybook/addon-docs/blocks';
+import { DocTable } from './DocTable';
+import { ActionButton } from './ActionButton';
+import { OccurrenceMarker } from './OccurrenceMarker';
+
+export const DoDontGrid = ({ children }) => (
+  <div
+    style={{
+      display: 'grid',
+      gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))',
+      gap: 16,
+      margin: '16px 0 28px',
+    }}
+  >
+    {children}
+  </div>
+);
+
+export const DoCard = ({ title, children, preview }) => (
+  <div
+    style={{
+      borderRadius: 20,
+      border: '2px solid #15803D',
+      background: '#FFFFFF',
+      overflow: 'hidden',
+      display: 'flex',
+      flexDirection: 'column',
+    }}
+  >
+    <div
+      style={{
+        padding: '10px 16px',
+        background: '#DCFCE7',
+        color: '#14532D',
+        fontWeight: 700,
+        fontSize: 13,
+        fontFamily: 'var(--ajd-font-family)',
+        display: 'flex',
+        alignItems: 'center',
+        gap: 8,
+      }}
+    >
+      <span>✓ Faça (Do)</span>
+      {title && <span style={{ fontWeight: 500 }}>— {title}</span>}
+    </div>
+    {preview && (
+      <div
+        style={{
+          padding: 20,
+          background: 'var(--ajd-color-surface)',
+          borderBottom: '1px solid var(--ajd-color-outline)',
+          display: 'flex',
+          gap: 12,
+          alignItems: 'center',
+          justifyContent: 'center',
+          flexWrap: 'wrap',
+        }}
+      >
+        {preview}
+      </div>
+    )}
+    <div
+      style={{
+        padding: 16,
+        fontSize: 13,
+        lineHeight: 1.5,
+        color: 'var(--ajd-color-text-primary)',
+        fontFamily: 'var(--ajd-font-family)',
+      }}
+    >
+      {children}
+    </div>
+  </div>
+);
+
+export const DontCard = ({ title, children, preview }) => (
+  <div
+    style={{
+      borderRadius: 20,
+      border: '2px solid #DC2626',
+      background: '#FFFFFF',
+      overflow: 'hidden',
+      display: 'flex',
+      flexDirection: 'column',
+    }}
+  >
+    <div
+      style={{
+        padding: '10px 16px',
+        background: '#FEE2E2',
+        color: '#991B1B',
+        fontWeight: 700,
+        fontSize: 13,
+        fontFamily: 'var(--ajd-font-family)',
+        display: 'flex',
+        alignItems: 'center',
+        gap: 8,
+      }}
+    >
+      <span>✕ Evite (Don&apos;t)</span>
+      {title && <span style={{ fontWeight: 500 }}>— {title}</span>}
+    </div>
+    {preview && (
+      <div
+        style={{
+          padding: 20,
+          background: 'var(--ajd-color-surface)',
+          borderBottom: '1px solid var(--ajd-color-outline)',
+          display: 'flex',
+          gap: 12,
+          alignItems: 'center',
+          justifyContent: 'center',
+          flexWrap: 'wrap',
+        }}
+      >
+        {preview}
+      </div>
+    )}
+    <div
+      style={{
+        padding: 16,
+        fontSize: 13,
+        lineHeight: 1.5,
+        color: 'var(--ajd-color-text-primary)',
+        fontFamily: 'var(--ajd-font-family)',
+      }}
+    >
+      {children}
+    </div>
+  </div>
+);
+
+<Meta title="Ajudivas/Padrões de uso" />
+
+# Padrões de uso (Guidelines)
+
+Este guia consolida as diretrizes de composição, ergonomia, semântica visual e
+boas práticas (*Do&apos;s & Don&apos;ts*) do Design System **Ajudivas**, alinhadas ao
+**Design Rationale** e aos requisitos `RF01–RF10` / `RNF01–RNF10`.
+
+---
+
+## 1. Ergonomia e Zonas de Alcance (One-Handed Use — RNF01)
+
+O aplicativo é projetado para uso em deslocamento a pé, frequentemente à noite
+e utilizando apenas uma mão. Por isso, a tela de **390 × 844 px** é dividida em
+**três zonas funcionais**:
+
+<DocTable
+  head={['Zona da Tela', 'Posição Vertical', 'Componentes Permitidos', 'Regra de Uso']}
+  rows={[
+    [
+      '**1. Zona de Contexto e Busca**',
+      'Topo (0–190 px)',
+      '`AppHeader`, `SearchBar`, `AccessibilityToolbar`',
+      'Usada no início da jornada (antes de caminhar) para definir destino ou ajustar acessibilidade.',
+    ],
+    [
+      '**2. Zona de Exploração Visual**',
+      'Centro (190–480 px)',
+      'Mapa, `OccurrenceMarker`, `OccurrenceDetails`',
+      'Exibe os pontos de atenção no mapa e balões de detalhes acionados por toque.',
+    ],
+    [
+      '**3. Zona do Polegar (Ação Crítica)**',
+      'Base (480–844 px)',
+      '`RouteSheet`, `ActionButton` (CTA), `NavBar` (com **Pânico**)',
+      'Todas as decisões críticas (escolher rota, iniciar trajeto, acionar emergência) devem ficar nesta metade inferior.',
+    ],
+  ]}
+/>
+
+---
+
+## 2. Boas Práticas: Faça vs. Evite (*Do&apos;s & Don&apos;ts*)
+
+### 2.1. Semântica de Cores e Gravidade (RNF09 / WCAG 1.4.1)
+
+As cores seguem rigorosamente o código semântico de segurança: **Roxo = Seguro**,
+**Laranja = Atenção (Médio)** e **Vermelho = Perigo (Grave) / Emergência**.
+
+<DoDontGrid>
+  <DoCard
+    title="Cor + Ícone + Texto com contraste AA"
+    preview={
+      <div style={{ display: 'flex', gap: 12, alignItems: 'center' }}>
+        <span
+          style={{
+            padding: '4px 12px',
+            borderRadius: 14,
+            background: 'var(--ajd-color-highlight-bg)',
+            color: 'var(--ajd-color-highlight-text)',
+            font: '700 12px var(--ajd-font-family)',
+          }}
+        >
+          ✓ Recomendada
+        </span>
+        <span
+          style={{
+            padding: '4px 12px',
+            borderRadius: 14,
+            background: 'var(--ajd-color-warning-highlight-bg)',
+            color: 'var(--ajd-color-warning-strong)',
+            font: '700 12px var(--ajd-font-family)',
+          }}
+        >
+          ⚠ 6 relatos (Médio)
+        </span>
+      </div>
+    }
+  >
+    Combine sempre <strong>cor + ícone/selo + rótulo textual</strong>. Para textos de
+    atenção, utilize sempre <code>--ajd-color-warning-strong</code> (<code>#9A3412</code>,
+    contraste <strong>7.31:1</strong>).
+  </DoCard>
+
+  <DontCard
+    title="Preenchimento claro em texto ou cor isolada"
+    preview={
+      <div style={{ display: 'flex', gap: 12, alignItems: 'center' }}>
+        <span
+          style={{
+            padding: '4px 12px',
+            borderRadius: 14,
+            background: '#FFFFFF',
+            color: '#E46962',
+            font: '500 12px var(--ajd-font-family)',
+          }}
+        >
+          Pouca iluminação
+        </span>
+        <span
+          style={{
+            width: 16,
+            height: 16,
+            borderRadius: 999,
+            background: '#DC2626',
+            display: 'inline-block',
+          }}
+        />
+      </div>
+    }
+  >
+    <strong>Nunca</strong> use <code>--ajd-color-warning</code> (<code>#E46962</code>) para
+    textos pequenos sobre fundo branco (3.23:1 reprova na WCAG) nem indique
+    gravidade apenas por um ponto colorido sem ícone/rótulo.
+  </DontCard>
+</DoDontGrid>
+
+---
+
+### 2.2. Hierarquia de Ações e Botões (`ActionButton` — RNF01 / RNF09)
+
+Em momentos de estresse ou pressa, a usuária precisa identificar a ação principal
+em menos de 1 segundo (baixa carga cognitiva).
+
+<DoDontGrid>
+  <DoCard
+    title="Apenas uma ação primária por painel"
+    preview={
+      <div style={{ display: 'flex', gap: 8, alignItems: 'center' }}>
+        <ActionButton variant="cta" size="md">
+          Iniciar rota
+        </ActionButton>
+        <ActionButton variant="secondary" size="md">
+          Compartilhar
+        </ActionButton>
+      </div>
+    }
+  >
+    Destaque apenas <strong>um botão principal (CTA)</strong> por contexto (ex.:{' '}
+    <em>&ldquo;Iniciar rota&rdquo;</em> no painel inferior) e use variantes{' '}
+    <code>secondary</code> ou <code>ghost</code> para ações complementares.
+  </DoCard>
+
+  <DontCard
+    title="Competição visual ou vermelho para ações neutras"
+    preview={
+      <div style={{ display: 'flex', gap: 8, alignItems: 'center' }}>
+        <ActionButton variant="primary" size="md">
+          Ver detalhes
+        </ActionButton>
+        <ActionButton variant="danger" size="md">
+          Fechar painel
+        </ActionButton>
+      </div>
+    }
+  >
+    Não coloque múltiplos botões primários lado a lado nem utilize a variante{' '}
+    <code>danger</code> (vermelho) para ações neutras como &ldquo;Fechar&rdquo; ou
+    &ldquo;Cancelar&rdquo;. O vermelho é exclusivo para <strong>Pânico</strong> e{' '}
+    <strong>Perigo Grave</strong>.
+  </DontCard>
+</DoDontGrid>
+
+---
+
+### 2.3. Tipografia e Uso dos Bolds
+
+A hierarquia tipográfica utiliza a família **Roboto** combinada aos dois tokens
+de cor de texto (`--ajd-color-text-primary` e `--ajd-color-text-secondary`).
+
+<DoDontGrid>
+  <DoCard
+    title="Contraste claro entre Título (Bold) e Apoio (Regular/Medium)"
+    preview={
+      <div
+        style={{
+          background: '#FFFFFF',
+          padding: '12px 16px',
+          borderRadius: 16,
+          width: '100%',
+        }}
+      >
+        <div
+          style={{
+            color: 'var(--ajd-color-text-primary)',
+            fontWeight: 700,
+            fontSize: 16,
+          }}
+        >
+          Rota segura · 12 min (850 m)
+        </div>
+        <div
+          style={{
+            color: 'var(--ajd-color-text-secondary)',
+            fontWeight: 400,
+            fontSize: 13,
+            marginTop: 4,
+          }}
+        >
+          Iluminação pública constante e movimento de pessoas
+        </div>
+      </div>
+    }
+  >
+    Use <code>--ajd-color-text-primary</code> (<code>#211D29</code>) com{' '}
+    <strong>Bold 700</strong> ou <strong>SemiBold 600</strong> em títulos e métricas,
+    e <code>--ajd-color-text-secondary</code> (<code>#625B71</code>) em descrições
+    complementares.
+  </DoCard>
+
+  <DontCard
+    title="Excesso de negrito ou texto secundário em títulos"
+    preview={
+      <div
+        style={{
+          background: '#FFFFFF',
+          padding: '12px 16px',
+          borderRadius: 16,
+          width: '100%',
+        }}
+      >
+        <div
+          style={{
+            color: 'var(--ajd-color-text-secondary)',
+            fontWeight: 400,
+            fontSize: 14,
+          }}
+        >
+          Rota segura · 12 min
+        </div>
+        <div
+          style={{
+            color: 'var(--ajd-color-text-primary)',
+            fontWeight: 700,
+            fontSize: 14,
+            marginTop: 4,
+          }}
+        >
+          <strong>Iluminação pública constante e movimento de pessoas na via inteira</strong>
+        </div>
+      </div>
+    }
+  >
+    Não inverta a hierarquia deixando o título com menor peso que a descrição, e
+    não aplique <strong>Bold 700</strong> em parágrafos longos (compromete a leitura
+    rápida).
+  </DontCard>
+</DoDontGrid>
+
+---
+
+### 2.4. Marcadores no Mapa e Privacidade (RNF03 / RNF10)
+
+<DoDontGrid>
+  <DoCard
+    title="Relatos anônimos e agregados por trecho"
+    preview={
+      <div style={{ display: 'flex', gap: 16, alignItems: 'center' }}>
+        <OccurrenceMarker severity="grave" />
+        <OccurrenceMarker severity="media" />
+      </div>
+    }
+  >
+    Agrupe ocorrências por trecho de via exibindo a contagem agregada (ex.:{' '}
+    <em>&ldquo;14 relatos · Relatado há 2h&rdquo;</em>) e mantenha total anonimato da
+    usuária conforme a LGPD (RNF03).
+  </DoCard>
+
+  <DontCard
+    title="Exposição de dados pessoais ou residenciais"
+    preview={
+      <div
+        style={{
+          padding: '8px 12px',
+          borderRadius: 12,
+          background: '#FEE2E2',
+          color: '#991B1B',
+          font: '600 12px var(--ajd-font-family)',
+        }}
+      >
+        ✕ Relatado por Maria Silva ( Casa nº 142 )
+      </div>
+    }
+  >
+    <strong>Jamais</strong> exiba nomes civis, fotos de perfil identificáveis ou
+    números exatos de residências/moradias estudantis nos cards de ocorrência.
+  </DontCard>
+</DoDontGrid>
+
+---
+
+## 3. Padrões de Composição por Fluxo
+
+<DocTable
+  head={['Fluxo da Usuária', 'Sequência de Componentes', 'Requisitos Atendidos']}
+  rows={[
+    [
+      '**1. Busca e Escolha de Rota Segura**',
+      '`AppHeader` → `SearchBar` (`repouso` → `edicao` → `pesquisado`) → `RouteSheet` (`segura` vs `insegura`) → CTA **Iniciar rota**',
+      'RF01, RF02, RF06, RNF01, RNF09',
+    ],
+    [
+      '**2. Inspeção de Alerta no Mapa**',
+      '`OccurrenceMarker` (`grave` ou `media`) → abre `OccurrenceDetails` ancorado → botão **X** fecha e devolve o foco ao marcador',
+      'RF03, RF05, RF09, RNF02',
+    ],
+    [
+      '**3. Emergência e Apoio Rápido**',
+      '`NavBar` fixa na base → botão central **Pânico** (56 px, elevado) ou aba **Contatos úteis** → discador nativo em ≤ 1,5 s',
+      'RF04, RNF01, RNF04',
+    ],
+    [
+      '**4. Adaptação de Acessibilidade**',
+      '`AccessibilityToolbar` → ajuste de escala de texto (`85%`, `100%`, `125%`) e alto contraste (`data-ajd-contrast="high"`) refletidos globalmente via tokens',
+      'RNF02 (WCAG 2.1 AA)',
+    ],
+  ]}
+/>

@@ -1,0 +1,363 @@
+import { useState } from 'react';
+import { Meta } from '@storybook/addon-docs/blocks';
+import { DocTable } from './DocTable';
+import { SearchBar } from './SearchBar';
+import { AppHeader } from './AppHeader';
+import { RouteSheet } from './RouteSheet';
+import { NavBar } from './NavBar';
+import { OccurrenceMarker } from './OccurrenceMarker';
+import { OccurrenceDetails } from './OccurrenceDetails';
+import { AccessibilityToolbar } from './AccessibilityToolbar';
+
+export const DemoBox = ({ background = 'var(--ajd-color-surface)', children, label }) => (
+  <div
+    style={{
+      margin: '16px 0 28px',
+      padding: 24,
+      borderRadius: 24,
+      background,
+      border: '1px solid var(--ajd-color-outline)',
+      display: 'grid',
+      gap: 16,
+      justifyItems: 'center',
+    }}
+  >
+    {label && (
+      <span
+        style={{
+          justifySelf: 'start',
+          padding: '4px 10px',
+          borderRadius: 999,
+          fontSize: 11,
+          fontWeight: 600,
+          fontFamily: 'var(--ajd-font-family)',
+          background: 'var(--ajd-color-highlight-bg)',
+          color: 'var(--ajd-color-highlight-text)',
+        }}
+      >
+        {label}
+      </span>
+    )}
+    {children}
+  </div>
+);
+
+export const SearchBarDemo = () => {
+  const [state, setState] = useState('repouso');
+  const [value, setValue] = useState('');
+
+  return (
+    <DemoBox label="Interativo · Experimente clicar, digitar ou escolher uma sugestão">
+      <div style={{ display: 'flex', gap: 8, flexWrap: 'wrap', justifyContent: 'center' }}>
+        {(['repouso', 'edicao', 'pesquisado']).map((s) => (
+          <button
+            key={s}
+            type="button"
+            onClick={() => {
+              setState(s);
+              if (s === 'pesquisado' && !value) setValue('Casa da Vânia');
+              if (s === 'repouso') setValue('');
+            }}
+            style={{
+              padding: '6px 12px',
+              borderRadius: 999,
+              border: '1px solid var(--ajd-color-outline-strong)',
+              background: state === s ? 'var(--ajd-color-primary)' : '#fff',
+              color: state === s ? '#fff' : 'var(--ajd-color-text-primary)',
+              font: '600 12px var(--ajd-font-family)',
+              cursor: 'pointer',
+            }}
+          >
+            Estado: {s}
+          </button>
+        ))}
+      </div>
+      <div style={{ width: '100%', maxWidth: 358 }}>
+        <SearchBar
+          state={state}
+          value={value}
+          onChange={(next) => {
+            setValue(next);
+            setState(next ? 'edicao' : 'repouso');
+          }}
+          onSuggestionSelect={(suggestion) => {
+            setValue(suggestion.label);
+            setState('pesquisado');
+          }}
+          onSubmit={() => setState('pesquisado')}
+        />
+      </div>
+    </DemoBox>
+  );
+};
+
+export const AppHeaderDemo = () => {
+  const [state, setState] = useState('repouso');
+  const [value, setValue] = useState('');
+
+  return (
+    <DemoBox background="#211D29" label="Interativo · Header + Pesquisa (Figma 1018:2148)">
+      <AppHeader
+        searchState={state}
+        searchValue={value}
+        onSearchFocus={() => setState('edicao')}
+        onSearchChange={setValue}
+        onSearchSuggestionSelect={(suggestion) => {
+          setValue(suggestion.label);
+          setState('pesquisado');
+        }}
+        onSearchSubmit={(next) => {
+          setValue(next);
+          setState('pesquisado');
+        }}
+      />
+    </DemoBox>
+  );
+};
+
+export const RouteSheetDemo = () => {
+  const [selected, setSelected] = useState('segura');
+  const [started, setStarted] = useState(null);
+
+  return (
+    <DemoBox background="#211D29" label="Interativo · Alterne entre Rota Segura e Rota Insegura (Figma 1037:513)">
+      <RouteSheet
+        selected={selected}
+        onSelect={(kind) => {
+          setSelected(kind);
+          setStarted(null);
+        }}
+        onStart={(kind) => setStarted(kind)}
+      />
+      {started && (
+        <p
+          role="status"
+          style={{
+            margin: 0,
+            padding: '8px 16px',
+            borderRadius: 999,
+            background: 'var(--ajd-color-highlight-bg)',
+            color: 'var(--ajd-color-highlight-text)',
+            font: '600 12px var(--ajd-font-family)',
+          }}
+        >
+          Rota iniciada: {started === 'segura' ? 'Rota segura (recomendada)' : 'Rota alternativa'} — monitoramento ativo (RF06).
+        </p>
+      )}
+    </DemoBox>
+  );
+};
+
+export const NavBarDemo = () => {
+  const [active, setActive] = useState('inicio');
+
+  return (
+    <DemoBox background="#211D29" label="Interativo · Clique nos destinos da barra inferior (Figma 1029:2603)">
+      <NavBar active={active} onNavigate={setActive} />
+      <span style={{ color: '#F3EDF7', font: '500 12px var(--ajd-font-family)' }}>
+        Destino selecionado: <strong>{active}</strong>
+      </span>
+    </DemoBox>
+  );
+};
+
+export const OccurrenceDemo = () => {
+  const [activeSeverity, setActiveSeverity] = useState('grave');
+  const [detailsOpen, setDetailsOpen] = useState(true);
+
+  return (
+    <DemoBox background="#211D29" label="Interativo · Clique nos marcadores para abrir o card de detalhes (Figma 1016:798 → 1016:759)">
+      <div
+        style={{
+          display: 'flex',
+          gap: 16,
+          alignItems: 'center',
+          padding: '12px 20px',
+          borderRadius: 16,
+          background: 'var(--ajd-color-surface)',
+        }}
+      >
+        <span style={{ font: '600 12px var(--ajd-font-family)', color: 'var(--ajd-color-text-primary)' }}>
+          Marcadores no mapa:
+        </span>
+        <OccurrenceMarker
+          severity="grave"
+          selected={detailsOpen && activeSeverity === 'grave'}
+          onClick={() => {
+            setActiveSeverity('grave');
+            setDetailsOpen(true);
+          }}
+        />
+        <OccurrenceMarker
+          severity="media"
+          selected={detailsOpen && activeSeverity === 'medio'}
+          onClick={() => {
+            setActiveSeverity('medio');
+            setDetailsOpen(true);
+          }}
+        />
+      </div>
+
+      {detailsOpen ? (
+        <OccurrenceDetails
+          severity={activeSeverity}
+          onClose={() => setDetailsOpen(false)}
+        />
+      ) : (
+        <p style={{ margin: 0, color: '#F3EDF7', font: '500 13px var(--ajd-font-family)' }}>
+          Detalhes fechados. Toque em um dos marcadores acima para reabrir.
+        </p>
+      )}
+    </DemoBox>
+  );
+};
+
+export const AccessibilityToolbarDemo = () => {
+  const [highContrast, setHighContrast] = useState(false);
+  const [scale, setScale] = useState('default');
+
+  return (
+    <DemoBox label="Interativo · Barra de acessibilidade (WCAG 2.1 AA)">
+      <AccessibilityToolbar
+        highContrast={highContrast}
+        textScale={scale}
+        onHighContrastChange={setHighContrast}
+        onTextScaleChange={setScale}
+      />
+    </DemoBox>
+  );
+};
+
+<Meta title="Ajudivas/Interações" />
+
+# Interações
+
+Este documento descreve as interações do protótipo do Figma e como cada uma
+foi implementada nos componentes. As reações foram extraídas das conexões do
+protótipo no arquivo **Projeto IHC**.
+
+## Matriz de reações do protótipo
+
+<DocTable
+  head={['Origem', 'Gatilho', 'Ação', 'Destino', 'Implementação']}
+  rows={[
+    ['Marcador de ocorrência', 'Clique / toque', 'Smart Animate', 'Detalhes da ocorrência', '`OccurrenceMarker` → `OccurrenceDetails`'],
+    ['Botão **X** (detalhes)', 'Clique', 'Back', 'Tela anterior', '`onClose` em `OccurrenceDetails`'],
+    ['Barra de pesquisa', 'Clique', 'Change to', '`SearchBar` `Estado=Em edição`', 'prop `state` (`repouso` → `edicao`)'],
+    ['Ícone de lupa', 'Clique', 'Navigate to', 'Home (Rotas Opções)', '`onSubmit` em `SearchBar`'],
+    ['Opção “rota perigosa”', 'Clique', 'Change to', '`RouteSheet` `Rota Insegura`', '`selectedRoute` em `RouteSheet`'],
+    ['Botão **Iniciar rota**', 'Clique', 'Navigate to', 'Mapa (Iniciar rota)', '`onStart` em `RouteSheet`'],
+    ['Ícone de fechamento (rotas)', 'Clique', 'Back', 'Tela anterior', '`onClose` em `RouteSheet`'],
+    ['Botão **Voltar**', 'Clique', 'Back', 'Tela anterior', '`onBack` em `AppHeader`'],
+  ]}
+/>
+
+## Máquinas de estado
+
+### SearchBar e AppHeader
+
+```text
+repouso ──focus/click──▶ edicao ──digita──▶ edicao (sugestões filtradas)
+   ▲                       │  │
+   │                       │  └──Esc / blur──▶ repouso
+   │                       └──Enter / lupa──▶ pesquisado ──limpar──▶ repouso
+   └─────────────────────────────limpar──────────────────────────────┘
+```
+
+- **Repouso:** placeholder “Para onde você vai?”; lupa à esquerda.
+- **Em edição:** borda primária de 2 px, botão **X** para limpar,
+  dropdown com “Sugestões recentes” e lista filtrada.
+- **Pesquisado:** termo aplicado, contador de resultados, **X** para limpar.
+- Teclado: `↓`/`↑` percorre sugestões, `Enter` confirma, `Esc` fecha.
+- ARIA: `role="combobox"`, `aria-expanded`, `aria-activedescendant`,
+  `aria-controls`; cada opção é `role="option"`.
+
+<SearchBarDemo />
+
+<AppHeaderDemo />
+
+### RouteSheet
+
+```text
+Rota segura (padrão) ⇄ Rota insegura
+        │                    │
+        └── Iniciar rota ────┴──▶ Mapa (Iniciar rota)
+```
+
+- Duas opções em um `radiogroup`; a selecionada ganha borda
+  `--ajd-color-outline-strong`, fundo branco, selo e `aria-checked`.
+- **Rota segura:** selo “Recomendada”, roxo, métricas de iluminação e
+  movimento de pessoas.
+- **Rota insegura:** selo “Cuidado”, fundo de atenção, alerta em
+  `--ajd-color-warning-strong`.
+- **Iniciar rota** é o CTA fixo na metade inferior (RNF01).
+
+<RouteSheetDemo />
+
+### NavBar
+
+```text
+Início │ Feed │ Pânico │ Contatos úteis │ Ajustes
+```
+
+- Item ativo: pílula `#EADDFF`, ícone e rótulo em `#6750A4`, `aria-current="page"`.
+- **Pânico:** botão elevado de 56 px, sempre visível, com `aria-label`
+  “Acionar pânico” e texto oculto explicando o discador de emergência.
+- Alvos: 70 × 76 px por item; toda a barra fica na metade inferior da tela.
+
+<NavBarDemo />
+
+### OccurrenceMarker / OccurrenceDetails
+
+```text
+Marcador (Grave | Média) ──toque──▶ Detalhes (Grave | Médio) ──X──▶ mapa
+```
+
+- **Grave:** vermelho `#DC2626`, ícone de alerta, contador de relatos.
+- **Média:** laranja `#E46962` no preenchimento, texto em `#9A3412`.
+- Detalhes trazem título, foto com selo “Relatado há…”, fatores de risco e
+  avaliação por estrelas.
+- O fechamento devolve o foco ao marcador que abriu o painel.
+
+<OccurrenceDemo />
+
+### AccessibilityToolbar
+
+```text
+texto 85 % ⇄ 100 % ⇄ 125 %
+contraste padrão ⇄ alto contraste
+voz desligada ⇄ ligada
+mapa detalhado ⇄ simplificado
+```
+
+- Um único `tab stop`; setas movem o foco, `Home`/`End` vão às pontas.
+- Alterações são anunciadas em `aria-live="polite"`.
+
+<AccessibilityToolbarDemo />
+
+## Fluxo de telas
+
+```text
+Ajudivas · Início
+   ├── Home (Mapa Interativo)
+   │     ├── toque no marcador ──▶ Home (Detalhes Ocorrência Grave)
+   │     │        └── X ──▶ Home (Mapa Interativo)
+   │     ├── toque no marcador ──▶ Home (Detalhes Ocorrência Média)
+   │     └── busca ──▶ Home (Rotas Opções)
+   │              ├── rota segura ──▶ Home (Rota + Detalhes Ocorrência)
+   │              └── Iniciar rota ──▶ Mapa (Iniciar rota) ──▶ Mapa (Chegada)
+   ├── Feed Comunitário
+   └── Pânico ──▶ discador de emergência
+```
+
+## Regras de interação
+
+1. **Feedback imediato.** Todo toque responde em ≤ 120 ms (hover/pressed).
+2. **Sem gestos obrigatórios.** Nenhuma ação depende de swipe; gestos são
+   atalhos opcionais (WCAG 2.5.1).
+3. **Confirmação para ações destrutivas.** Pânico pede confirmação por voz e
+   vibração antes de discar.
+4. **Foco devolvido.** Painéis e sheets devolvem o foco ao elemento de origem.
+5. **Estados nunca só por cor.** Sempre há texto, ícone ou atributo ARIA.
+6. **Uma decisão por tela.** A próxima ação é sempre o elemento de maior
+   contraste/destaque (RNF03).

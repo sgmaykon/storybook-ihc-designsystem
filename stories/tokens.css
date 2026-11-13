@@ -1,0 +1,259 @@
+/**
+ * Ajudivas — Design tokens
+ * Fonte da verdade: Figma "Projeto IHC" (fileKey h2E2rFkNY3qruR8t0gIyAl)
+ *   - Página "Componentes" (1012:320)
+ *   - Página "Icons" / "Ajudivas / Catálogo de ícones" (1010:15)
+ *   - Estilos locais: Roxo (Principal) #6750A4, Vermelho (alerta) #DC2626,
+ *     Laranja (alerta médio) #E46962, variável "Branco" #FFFFFF
+ *
+ * Requisitos: RNF02 (WCAG 2.1 AA, contraste ≥ 4.5:1), RNF09 (convenção cromática
+ * seguro/atenção/perigo), RNF01 (alvos de toque grandes na metade inferior).
+ *
+ * Todos os tamanhos de fonte usam rem para permitir redimensionamento de texto
+ * pelo sistema operacional / zoom do navegador (WCAG 1.4.4).
+ */
+
+:root {
+  color-scheme: light;
+
+  /* ---------------------------------------------------------------------
+   * 1. Cores — marca e ações
+   * ------------------------------------------------------------------ */
+  --ajd-color-primary: #6750a4; /* Roxo (Principal) — CTA, links, item ativo */
+  --ajd-color-primary-hover: #5c4696;
+  --ajd-color-primary-active: #4f378b;
+  --ajd-color-on-primary: #ffffff; /* texto e ícones sobre botão primário */
+  --ajd-color-highlight-bg: #eaddff; /* fundo de destaque: selo "Recomendada", pílula ativa */
+  --ajd-color-highlight-text: #4f378b; /* texto em destaque sobre fundo claro (7.23:1) */
+  --ajd-color-primary-soft: #f3eef8; /* fundo de ícone / hover suave */
+
+  /* Aliases para compatibilidade */
+  --ajd-color-primary-container: var(--ajd-color-highlight-bg);
+  --ajd-color-on-primary-container: var(--ajd-color-highlight-text);
+
+  /* ---------------------------------------------------------------------
+   * 2. Cores — superfícies e bordas
+   * ------------------------------------------------------------------ */
+  --ajd-color-surface: #f3edf7; /* fundo padrão do app (M3 surface container) */
+  --ajd-color-surface-raised: #ffffff; /* cards, barras, bottom sheets */
+  --ajd-color-surface-sunken: rgba(0, 0, 0, 0.05); /* card não selecionado */
+  --ajd-color-outline: #e7e1f0; /* divisórias e bordas decorativas */
+  --ajd-color-outline-strong: #d0bcff; /* borda de seleção (roxo claro) */
+  --ajd-color-scrim: rgba(33, 29, 41, 0.55);
+  --ajd-color-overlay-photo: rgba(243, 237, 247, 0.75);
+
+  /* ---------------------------------------------------------------------
+   * 2.1. Cores de texto
+   * ------------------------------------------------------------------ */
+  --ajd-color-text-primary: #211d29; /* texto principal: títulos Bold/SemiBold, métricas, corpo */
+  --ajd-color-text-secondary: #625b71; /* texto secundário: legendas, rótulos NavBar, placeholder */
+
+  /* Aliases para compatibilidade */
+  --ajd-color-on-surface: var(--ajd-color-text-primary);
+  --ajd-color-on-surface-variant: var(--ajd-color-text-secondary);
+
+  /* ---------------------------------------------------------------------
+   * 3. Cores — estado / gravidade
+   *    seguro = roxo principal · atenção = laranja · perigo = vermelho
+   * ------------------------------------------------------------------ */
+  --ajd-color-safe: var(--ajd-color-primary);
+  --ajd-color-safe-container: var(--ajd-color-primary-container);
+  --ajd-color-on-safe-container: var(--ajd-color-on-primary-container);
+
+  --ajd-color-warning: #e46962; /* Laranja (alerta médio) — preenchimento/ícone */
+  --ajd-color-warning-strong: #9a3412; /* texto acessível sobre superfícies claras (7.31:1) */
+  --ajd-color-warning-highlight-bg: #feefe2; /* fundo de destaque de atenção */
+  --ajd-color-warning-highlight-text: #994d1b; /* texto de destaque de atenção */
+  --ajd-color-warning-container: var(--ajd-color-warning-highlight-bg);
+  --ajd-color-on-warning-container: var(--ajd-color-warning-highlight-text);
+  --ajd-color-warning-surface: rgba(249, 222, 220, 0.5);
+  --ajd-color-warning-outline: #fecaca;
+
+  --ajd-color-danger: #dc2626; /* Vermelho (alerta) — preenchimento/ícone */
+  --ajd-color-danger-strong: #b91c1c; /* texto/hover acessível (6.47:1) */
+  --ajd-color-danger-highlight-bg: #fee2e2; /* fundo de destaque de perigo */
+  --ajd-color-danger-highlight-text: #991b1b; /* texto de destaque de perigo */
+  --ajd-color-danger-container: var(--ajd-color-danger-highlight-bg);
+  --ajd-color-on-danger-container: var(--ajd-color-danger-highlight-text);
+
+  /* ---------------------------------------------------------------------
+   * 4. Foco e acessibilidade
+   * ------------------------------------------------------------------ */
+  --ajd-color-focus: #4f378b;
+  --ajd-color-focus-inner: #ffffff;
+  --ajd-focus-width: 3px;
+  --ajd-focus-offset: 2px;
+
+  --ajd-touch-target: 48px; /* Material / WCAG 2.5.5 (AAA) */
+  --ajd-touch-target-min: 44px;
+  --ajd-touch-target-compact: 24px; /* mínimo WCAG 2.5.8 (AA) */
+
+  /* ---------------------------------------------------------------------
+   * 5. Tipografia — Roboto (Google Fonts, Apache 2.0)
+   * ------------------------------------------------------------------ */
+  --ajd-font-family: 'Roboto', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  --ajd-font-weight-regular: 400;
+  --ajd-font-weight-medium: 500;
+  --ajd-font-weight-semibold: 600;
+  --ajd-font-weight-bold: 700;
+
+  /* Escala de texto controlada pela barra de acessibilidade (WCAG 1.4.4) */
+  --ajd-text-scale: 1;
+
+  --ajd-font-size-display: calc(1.75rem * var(--ajd-text-scale)); /* 28px — título do app */
+  --ajd-font-size-title-lg: calc(1.375rem * var(--ajd-text-scale)); /* 22px — título de aviso */
+  --ajd-font-size-title: calc(1.125rem * var(--ajd-text-scale)); /* 18px — título de painel */
+  --ajd-font-size-subtitle: calc(1rem * var(--ajd-text-scale)); /* 16px */
+  --ajd-font-size-body: calc(0.875rem * var(--ajd-text-scale)); /* 14px — corpo e botões */
+  --ajd-font-size-label: calc(0.75rem * var(--ajd-text-scale)); /* 12px — rótulos, badges */
+  --ajd-font-size-label-sm: calc(0.6875rem * var(--ajd-text-scale)); /* 11px — nav bar, legendas */
+  --ajd-font-size-caption: calc(0.625rem * var(--ajd-text-scale)); /* 10px — micro-legendas */
+  --ajd-font-size-status: calc(0.75rem * var(--ajd-text-scale)); /* 12px — status bar */
+
+  --ajd-line-height-tight: 1.15;
+  --ajd-line-height-normal: 1.35;
+  --ajd-line-height-relaxed: 1.5;
+  --ajd-letter-spacing-tight: -0.5px;
+  --ajd-letter-spacing-wide: 1px;
+
+  /* ---------------------------------------------------------------------
+   * 6. Espaçamento (base 4 px)
+   * ------------------------------------------------------------------ */
+  --ajd-space-0: 0;
+  --ajd-space-1: 2px;
+  --ajd-space-2: 4px;
+  --ajd-space-3: 6px;
+  --ajd-space-4: 8px;
+  --ajd-space-5: 10px;
+  --ajd-space-6: 12px;
+  --ajd-space-7: 16px;
+  --ajd-space-8: 18px;
+  --ajd-space-9: 20px;
+  --ajd-space-10: 24px;
+  --ajd-space-11: 32px;
+
+  /* ---------------------------------------------------------------------
+   * 7. Raios
+   * ------------------------------------------------------------------ */
+  --ajd-radius-xs: 8px;
+  --ajd-radius-sm: 12px;
+  --ajd-radius-md: 14px;
+  --ajd-radius-lg: 16px;
+  --ajd-radius-xl: 18px;
+  --ajd-radius-2xl: 20px;
+  --ajd-radius-3xl: 24px;
+  --ajd-radius-4xl: 32px;
+  --ajd-radius-pill: 999px;
+
+  /* ---------------------------------------------------------------------
+   * 8. Elevação (sombras do arquivo Figma)
+   * ------------------------------------------------------------------ */
+  --ajd-shadow-1: 0 3px 12px rgba(33, 29, 41, 0.12); /* barra de pesquisa, pânico */
+  --ajd-shadow-2: 0 4px 16px rgba(33, 29, 41, 0.15); /* card de aviso */
+  --ajd-shadow-3: 0 8px 12px rgba(33, 29, 41, 0.15); /* painel de rotas */
+  --ajd-shadow-suggestions: 0 4px 6px rgba(33, 29, 41, 0.08);
+
+  /* ---------------------------------------------------------------------
+   * 9. Movimento
+   * ------------------------------------------------------------------ */
+  --ajd-duration-fast: 120ms;
+  --ajd-duration-base: 200ms;
+  --ajd-duration-slow: 320ms;
+  --ajd-easing-standard: cubic-bezier(0.2, 0, 0, 1);
+  --ajd-easing-emphasized: cubic-bezier(0.05, 0.7, 0.1, 1);
+}
+
+/* -------------------------------------------------------------------------
+ * Alto contraste (botão de acessibilidade "Contraste").
+ * Aplicado em qualquer ancestral — no app, em <html>.
+ * ---------------------------------------------------------------------- */
+[data-ajd-contrast='high'] {
+  --ajd-color-primary: #4a2f86;
+  --ajd-color-primary-hover: #3d2670;
+  --ajd-color-primary-active: #2f1d57;
+  --ajd-color-highlight-bg: #ffffff;
+  --ajd-color-highlight-text: #2f1d57;
+  --ajd-color-primary-container: #ffffff;
+  --ajd-color-on-primary-container: #2f1d57;
+  --ajd-color-primary-soft: #ffffff;
+
+  --ajd-color-surface: #ffffff;
+  --ajd-color-surface-raised: #ffffff;
+  --ajd-color-surface-sunken: #ffffff;
+  --ajd-color-text-primary: #000000;
+  --ajd-color-text-secondary: #1a1a1a;
+  --ajd-color-on-surface: #000000;
+  --ajd-color-on-surface-variant: #1a1a1a;
+  --ajd-color-outline: #000000;
+  --ajd-color-outline-strong: #000000;
+  --ajd-color-overlay-photo: rgba(255, 255, 255, 0.95);
+
+  --ajd-color-warning: #7a2b1e;
+  --ajd-color-warning-strong: #7a2b1e;
+  --ajd-color-warning-container: #ffffff;
+  --ajd-color-on-warning-container: #7a2b1e;
+  --ajd-color-warning-surface: #ffffff;
+  --ajd-color-warning-outline: #000000;
+
+  --ajd-color-danger: #a80000;
+  --ajd-color-danger-strong: #8b0000;
+  --ajd-color-danger-container: #ffffff;
+  --ajd-color-on-danger-container: #8b0000;
+
+  --ajd-shadow-1: 0 0 0 2px #000000;
+  --ajd-shadow-2: 0 0 0 2px #000000;
+  --ajd-shadow-3: 0 0 0 2px #000000;
+  --ajd-shadow-suggestions: 0 0 0 2px #000000;
+}
+
+/* -------------------------------------------------------------------------
+ * Escala de texto (botões "Texto +" / "Texto −").
+ * ---------------------------------------------------------------------- */
+:root[data-ajd-text='large'] {
+  --ajd-text-scale: 1.25;
+}
+
+:root[data-ajd-text='compact'] {
+  --ajd-text-scale: 0.85;
+}
+
+/* -------------------------------------------------------------------------
+ * Base compartilhada pelos componentes Ajudivas
+ * ---------------------------------------------------------------------- */
+.ajd-root {
+  font-family: var(--ajd-font-family);
+  color: var(--ajd-color-on-surface);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+.ajd-visually-hidden {
+  position: absolute !important;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* Anel de foco de dois tons: visível sobre qualquer superfície (WCAG 2.4.7 / 1.4.11) */
+.ajd-focus-ring:focus-visible,
+.ajd-root :focus-visible {
+  outline: var(--ajd-focus-width) solid var(--ajd-color-focus);
+  outline-offset: var(--ajd-focus-offset);
+  box-shadow: 0 0 0 1px var(--ajd-color-focus-inner);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ajd-root *,
+  .ajd-root *::before,
+  .ajd-root *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}

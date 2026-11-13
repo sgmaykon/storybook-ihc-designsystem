@@ -1,0 +1,63 @@
+import { Meta } from '@storybook/addon-docs/blocks';
+import { DocTable } from './DocTable';
+
+<Meta title="Ajudivas/Visão geral" />
+
+# Ajudivas — Design system
+
+Componentes do aplicativo **Ajudivas**, reconstruídos a partir do arquivo Figma
+[Projeto IHC](https://www.figma.com/design/h2E2rFkNY3qruR8t0gIyAl/Projeto-IHC)
+(página **Componentes**, node `1012:320`), cruzados com a
+`Lista de requisitos.md` (RF01–RF10 / RNF01–RNF10).
+
+O objetivo do app é apoiar o deslocamento seguro de mulheres em situação de
+vulnerabilidade: mostrar rotas, registrar ocorrências e dar acesso rápido ao
+modo pânico.
+
+## O que está documentado aqui
+
+<DocTable
+  head={['Página', 'Conteúdo']}
+  rows={[
+    ['**Design tokens**', 'Cores (CTA, primária, secundária, estados), tipografia, espaçamento, raios e elevação'],
+    ['**Padrões de uso**', 'Zonas de alcance (One-Handed Use), boas práticas (Do\'s & Don\'ts) e composição de fluxos'],
+    ['**Acessibilidade**', 'Mapa WCAG 2.1 AA, contraste medido, barra de acessibilidade e diretrizes Material'],
+    ['**Interações**', 'Reações do protótipo, máquinas de estado e fluxo de telas'],
+    ['**Icons**', 'Catálogo completo (Material Symbols + Lucide) usado nos componentes'],
+  ]}
+/>
+
+## Componentes
+
+<DocTable
+  head={['Componente', 'Frame Figma', 'Variantes', 'Requisito']}
+  rows={[
+    ['`AppHeader`', '`1018:2148`', '—', 'RF01, RNF01'],
+    ['`SearchBar`', '`1012:321`', 'Em edição · Repouso · Pesquisado', 'RF01'],
+    ['`OccurrenceDetails`', '`1016:759`', 'Grave · Médio', 'RF04, RF05'],
+    ['`OccurrenceMarker`', '`1016:798`', 'Grave · Média', 'RF04, RF05'],
+    ['`NavBar`', '`1029:2603`', 'Default · Feed', 'RF09, RNF01'],
+    ['`RouteSheet`', '`1037:513`', 'Rota segura · Rota insegura', 'RF07, RF08, RNF09'],
+    ['`ActionButton`', '— (derivado)', 'CTA · Primária · Secundária · Ghost · Perigo', 'RNF01'],
+    ['`AccessibilityToolbar`', '— (derivado)', '—', 'RNF02, RNF03'],
+    ['`Icon`', '`1010:15`', 'Catálogo', '—'],
+  ]}
+/>
+
+## Princípios de design
+
+1. **Uma mão, metade inferior.** Ações principais (pânico, rotas, navegação)
+   ficam abaixo da dobra, com alvos ≥ 44 px (RNF01).
+2. **Segurança codificada por cor + forma + texto.** Roxo = seguro,
+   laranja = atenção, vermelho = perigo. Nunca só a cor (WCAG 1.4.1 / RNF09).
+3. **Baixa carga cognitiva.** Uma decisão por tela, linguagem direta, ícones
+   acompanhados de rótulo (RNF03).
+4. **Acessibilidade não é opcional.** Contraste ≥ 4.5:1 para texto, foco
+   visível, escala de texto e alto contraste em um toque (RNF02).
+
+## Como rodar
+
+```sh
+npm run storybook        # http://localhost:6006
+npm run build-storybook  # build estático em storybook-static/
+```
